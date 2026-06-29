@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Min Portfolio App</title>
+</head>
+<body>
+    <h1>Hej från Vanilla Frontend!</h1>
+    <button id="fetchBtn">Hämta data från API</button>
+    <ul id="itemList"></ul>
+
+    <h2>Lägg till item</h2>
+    <form id="addForm">
+        <label for="name">Name</label>
+        <input type="text" id="name">
+        <label for="name">Quantity</label>
+        <input type="text" id="quantity">
+        <button>Add item</button>
+    </form>
+
+    <script>
+        document.getElementById('fetchBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:3000/api/items');
+                const data = await response.json();
+                console.log(data);
+                
+                const list = document.getElementById('itemList');
+                list.innerHTML = ''; // Rensa listan
+                
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.name} (Antal: ${item.quantity})`;
+                    list.appendChild(li);
+                });
+            } catch (err) {
+                console.error('Fel vid hämtning:', err);
+            }
+        });
+
+        const form = document.getElementById('addForm');
+        const nameField = document.getElementById('name');
+        const quantityField = document.getElementById('quantity');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nameIn = nameField.value;
+            const quantityIn = quantityField.value;
+
+            fetch('/api/items', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: nameIn,
+                    quantity: quantityIn
+                })
+            }).then(res => res.json())
+            .then(data => console.log('Skapat:', data))
+            .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>

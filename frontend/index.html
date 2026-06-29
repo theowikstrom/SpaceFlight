@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Takeoff</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+<body>
+<nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary fixed-top own-top-nav primary-gradient">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">TakeOff</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Booking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Deals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-disabled="true">About</a>
+        </li>
+      </ul>
+        <span class="navbar-text ms-auto">
+        <i style="font-size: 25px; color: white; padding-right: 20px;" class="bi bi-person-circle btn"></i>
+      </span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="background-container">
+      <img src="Gemini_Generated_Image_5bmud5bmud5bmud5.png" alt="background image">
+      <div class="image-overlay"></div>
+  </div>
+
+  <section class="booking-container">
+    <div class="booking-div">
+      <div class="decoration-div primary-gradient">
+        <h1>Where to?</h1>
+      </div>
+      <div class="form container">
+        <div class="row gy-4">
+          <div class="col-6">
+            <label for="startInput" class="form-label">From</label>
+            <input type="text" class="form-control" placeholder="Kiruna (Earth)" aria-label="From" id="fromInput">
+          </div>
+            <div class="col-6">
+              <label for="toInput" class="form-label">To</label>
+              <input type="text" class="form-control" placeholder="Lavenia (Yater)" aria-label="To" id="toInput">
+            </div>
+            <div class="col-6">
+              <label for="liftoffInput" class="form-label">Lift off date</label>
+              <input type="date" class="form-control" id="liftoffInput">
+            </div>
+              <div class="col-6">
+                <label for="landingInput" class="form-label">Landing Date</label>
+                <input type="date" class="form-control" id="landingInput">
+            </div>
+            <div class="col-6">
+                <label for="travelerInput" class="form-label">Travelers</label>
+                <select name="Travelers" class="form-control" id="travelersInput">
+                  <option value="1">1 Passenger</option>
+                  <option value="2">2 Passengers</option>
+                  <option value="3">3 Passengers</option>
+                  <option value="4">4 Passengers</option>
+                  <option value="5">5 Passengers</option>
+                  <option value="6">6 Passengers</option>
+                  <option value="7">7 Passengers</option>
+                  <option value="8">8 Passengers</option>
+                  <option value="9">9 Passengers</option>
+                  <option value="10">10 Passengers</option>
+                </select>
+                </div>
+            <div class="col-6">
+                <label for="classInput" class="form-label">Travel class</label>
+                <select name="class" class="form-control" id="classInput">
+                  <option value="Economy class">Economy class</option>
+                  <option value="Business class">Business class</option>
+                  <option value="First class">First class</option>
+                </select>
+            </div>
+              <div class="col-10">
+              </div>
+            <div class="col-2">
+              <button class="own-std-btn primary-gradient">Search</button>
+              </div>
+            </div>
+          </div>
+
+          </div>
+        </div>
+    </div>
+    <div class="offers-div">
+      <div class="decoration-div primary-gradient">
+      </div>
+    </div>
+  </section>
+
+
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
