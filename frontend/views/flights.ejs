@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spaceflight - search results</title>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"></head>
+<body>
+    <nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary fixed-top own-top-nav primary-gradient">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">TakeOff</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Booking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Deals</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-disabled="true">About</a>
+        </li>
+      </ul>
+        <span class="navbar-text ms-auto">
+        <i style="font-size: 25px; color: white; padding-right: 20px;" class="bi bi-person-circle btn"></i>
+      </span>
+      </div>
+    </div>
+  </nav>
+    <section class="booking-section">
+        <div class="booking-title"> 
+            <h1 class="own-page-header">Departing</h1>
+            <h2 class="own-page-subheader"> <%= formattedDatesObject?.formattedOutDate %></h2>
+            <div class="title-accent-line red-accent-gradient"></div>
+        </div>
+
+        <div class="flightsListContainer">
+            <div class="flightCard">
+                <div class="fligthCard-Wrapper">
+                    <div class="flightCard-top-bar tertiary-gradient moving-gradient"></div>
+                    <div class="flightCard-top-grid">
+                        <div class="flightCard-flightInfo">Heyyy there is is some text</div>
+                        <div class="flightCard-priceInfoAndBookingBtn">
+                            <div class="fc-class"><%= userQuery.travelClass %></div>
+                            <div class="fc-class">$78 000</div>
+                            <button class="own-std-btn primary-gradient">Book</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</body>
+</html>

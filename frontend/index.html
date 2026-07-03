@@ -44,55 +44,79 @@
   </div>
 
   <section class="booking-container">
+
     <div class="booking-div">
       <div class="decoration-div primary-gradient">
         <h1>Where to?</h1>
       </div>
-      <div class="form container">
-        <div class="row gy-4">
-          <div class="col-6">
-            <label for="startInput" class="form-label">From</label>
-            <input type="text" class="form-control" placeholder="Kiruna (Earth)" aria-label="From" id="fromInput">
-          </div>
+      <form action="/flights/search" method="GET" class="was-validated">
+        <div class="form-container">
+                  <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="returnToggle" checked>
+             <label class="form-check-label" for="checkDefault">
+              Round Trip
+              </label>
+              </div>      
+          <div class="row gy-4">
             <div class="col-6">
-              <label for="toInput" class="form-label">To</label>
-              <input type="text" class="form-control" placeholder="Lavenia (Yater)" aria-label="To" id="toInput">
-            </div>
-            <div class="col-6">
-              <label for="liftoffInput" class="form-label">Lift off date</label>
-              <input type="date" class="form-control" id="liftoffInput">
+              <label for="startInput" class="form-label">From</label>
+              <input type="text" name="origin" class="form-control" aria-label="From" id="fromInput" required>
             </div>
               <div class="col-6">
-                <label for="landingInput" class="form-label">Landing Date</label>
-                <input type="date" class="form-control" id="landingInput">
-            </div>
-            <div class="col-6">
-                <label for="travelerInput" class="form-label">Travelers</label>
-                <select name="Travelers" class="form-control" id="travelersInput">
-                  <option value="1">1 Passenger</option>
-                  <option value="2">2 Passengers</option>
-                  <option value="3">3 Passengers</option>
-                  <option value="4">4 Passengers</option>
-                  <option value="5">5 Passengers</option>
-                  <option value="6">6 Passengers</option>
-                  <option value="7">7 Passengers</option>
-                  <option value="8">8 Passengers</option>
-                  <option value="9">9 Passengers</option>
-                  <option value="10">10 Passengers</option>
-                </select>
-                </div>
-            <div class="col-6">
-                <label for="classInput" class="form-label">Travel class</label>
-                <select name="class" class="form-control" id="classInput">
-                  <option value="Economy class">Economy class</option>
-                  <option value="Business class">Business class</option>
-                  <option value="First class">First class</option>
-                </select>
-            </div>
-              <div class="col-10">
+                <label for="toInput" class="form-label">To</label>
+                <input type="text" name="destination" class="form-control" aria-label="To" id="toInput">
               </div>
-            <div class="col-2">
-              <button class="own-std-btn primary-gradient">Search</button>
+              <div class="col-6">
+                <label for="liftoffInput" class="form-label">Lift off date</label>
+                <input type="date" name="outboundDate" class="form-control" id="liftoffInput">
+              </div>
+                <div class="col-6" id="returnDateContainer">
+                  <label for="returnInput" class="form-label">Return Date</label>
+                  <input type="date" name="returnDate" class="form-control" id="landingInput">
+              </div>
+              <div class="col-6">
+                  <label for="travelerInput" class="form-label">Adults</label>
+                  <select name="adultCount" class="form-control" id="travelersInput" required>
+                    <option value="1">1 Adult</option>
+                    <option value="2">2 Adults</option>
+                    <option value="3">3 Adults</option>
+                    <option value="4">4 Adults</option>
+                    <option value="5">5 Adults</option>
+                    <option value="6">6 Adults</option>
+                    <option value="7">7 Adults</option>
+                    <option value="8">8 Adults</option>
+                    <option value="9">9 Adults</option>
+                    <option value="10">10 Adults</option>
+                  </select>
+                  </div>
+                  <div class="col-6">
+                    <label for="travelerInput" class="form-label">Children</label>
+                    <select name="childCount" class="form-control" id="travelersInput" required>
+                    <option value="0">No Children</option>
+                    <option value="1">1 Child</option>
+                    <option value="2">2 Children</option>
+                    <option value="3">3 Children</option>
+                    <option value="4">4 Children</option>
+                    <option value="5">5 Children</option>
+                    <option value="6">6 Children</option>
+                    <option value="7">7 Children</option>
+                    <option value="8">8 Children</option>
+                    <option value="9">9 Children</option>
+                    <option value="10">10 Children</option>
+                    </select>
+                  </div>
+              <div class="col-6">
+                  <label for="classInput" class="form-label">Travel class</label>
+                  <select name="travelClass" class="form-control" id="classInput" required>
+                    <option value="Economy">Economy class</option>
+                    <option value="Business">Business class</option>
+                    <option value="First">First class</option>
+                  </select>
+              </div>
+              <div class="col-4" id="bookingFillerDiv"></div> 
+              <div class="col-2">
+                <button type="submit" class="own-std-btn primary-gradient" id="searchFlightBtn">Search</button>
+              </form>
               </div>
             </div>
           </div>

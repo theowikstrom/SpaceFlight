@@ -1,12 +1,31 @@
+:root {
+      --main-accent-color:#0F1A64;   
+      --second-accent-color: #BE1515;
 
+
+}
 .secondary-gradient {
       background-image: linear-gradient(to right, #1E1B3F , #1F1438, #0F3E6A);
+      background-size: 200% 100%;
+
 }
 
 .primary-gradient {
       background-image: linear-gradient(to right, #14104C , #390C40);
+      background-size: 200% 100%;
+
 }
 
+.tertiary-gradient {
+      background-image: linear-gradient(to right, #2a135e , #5e1661,#3c1375, #0e6579  );
+      background-size: 200% 100%;
+
+}
+
+.red-accent-gradient {
+      background: #BE1515;
+      background: linear-gradient(90deg,rgba(190, 21, 21, 0.8) 0%, rgba(190, 21, 21, 0.8) 50%, rgba(255, 255, 255, 0.01) 100%);
+}
 .own-top-nav {
     color: white;
 }
@@ -67,6 +86,15 @@
       border-radius: 20px 20px 0 0;
 }
 
+.flight-card-decoration-div {
+      position: absolute; 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      border-radius: 20px 20px 0 0;
+}
+
 .decoration-div h1 {
       color: white;
       font-size: 25px;
@@ -86,4 +114,99 @@
       border-style: none;
       font-size: 15px;
       padding: 10px;
+}
+
+#searchFlightBtn {
+      width: 100%;
+      margin-top: 20px;
+}
+
+.own-page-header {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+      font-size: 30px;
+      color: var(--main-accent-color)   
+
+}
+
+.own-page-subheader {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      color: var(--main-accent-color)   
+
+}
+
+.booking-section {
+      margin: 150px auto 0 auto;
+      padding-left: 150px;
+      padding-right: 150px;
+      
+}
+
+.booking-title h1, h2 {
+      margin-bottom: 0;
+}
+
+.title-accent-line {
+      height: 3.5px;
+      width: 12%;
+}
+
+.flightsListContainer {
+      margin-top: 75px;      
+}
+
+.flightCard {
+      background-color: #F4F4F4;
+      height: 200px;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease; 
+
+}
+
+.fligthCard-Wrapper {
+      padding: 7% 10%;
+      height: 100%;
+      width: 100%;
+}
+
+.flightCard-top-bar {
+      position: absolute; 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 15%;
+      border-radius: 20px 20px 0 0;
+}
+
+.flightCard-top-grid {
+      display: grid;
+      grid-template-columns: 5fr 1fr;
+      gap: 30%;
+}
+.flightCard-flightInfo {
+
+}
+
+.flightCard-priceInfoAndBookingBtn {
+      text-align: center;
+      padding-left: 0%;
+}
+
+@keyframes moving {
+    0% {background-position: 0% 50%;}
+	50% {background-position: 100% 50%;}
+	100% {background-position: 0% 50%;}
+}
+
+.flightCard:hover .moving-gradient,
+.flightCard:active .moving-gradient {
+    animation: moving 3s ease;
+    animation-iteration-count: infinite;
 }

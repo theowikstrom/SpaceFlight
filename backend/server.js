@@ -14,25 +14,27 @@ const mockEmployees = [
         {id: 2, name: "Beo"}
     ]
 
-// 1. Middleware
+
+
+// View Engine 
+app.set('views', path.join(__dirname, '../frontend/views'));
+app.set('view engine', 'ejs');
+// Middleware
 app.use(require('cors')());
 
 app.use(express.json()); 
 
 app.use(express.static(path.join(__dirname, '../frontend')));
-// 3. Anslut till MongoDB
+// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Ansluten till MongoDB framgångsrikt!'))
     .catch((err) => console.error('Kunde inte ansluta till MongoDB:', err));
 
-// 4. API-Routes
+// API-Routes
 app.use('/api/items', itemRoutes);
 
 app.use('/flights', flightRouter);
 
-app.get('/test',(request, response) => {
-    response.send("Why, hello there!")
-});
 
 app.get('/api/employees',(request, response) => {
     console.log(request.query);
@@ -68,6 +70,12 @@ app.get('/api/employees/:id', (request, response) => {
         return response.status(404).send("Employee not found");
     }
 
+});
+
+app.get('/test', (req, res) => {
+    res.render('test', {
+        title: 'This is the page title!'
+    });
 });
 
 app.post('/api/employees', (request, response) => {
