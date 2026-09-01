@@ -13,7 +13,9 @@
 <body>
     <nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary fixed-top own-top-nav primary-gradient">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">TakeOff</a>
+    <a class="navbar-brand" href="#">
+        <img src="../spacetravellogovar3.png" alt="Airspace spacetravel" height="25px" class="me-4">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -46,22 +48,106 @@
         </div>
 
         <div class="flightsListContainer">
-            <div class="flightCard">
+          <% for (let i = 0; i < out.length; i++) { %>
+            <div class="flightCard grow">
                 <div class="fligthCard-Wrapper">
                     <div class="flightCard-top-bar tertiary-gradient moving-gradient"></div>
                     <div class="flightCard-top-grid">
-                        <div class="flightCard-flightInfo">Heyyy there is is some text</div>
+                        <div class="flightCard-flightInfo">
+                            <div class="fc-departureInfoContainer">
+                              <ul>
+                                  <% let fullDate = new Date(out[i].departureDateAndTime) %>
+                                  
+                                  <% 
+                                    const formatter = new Intl.DateTimeFormat('en-US', {
+                                      month: 'short',
+                                      day: 'numeric'
+                                    });
+                                    const formattedOutDate = formatter.format(fullDate);
+                                    let onlyTime = fullDate.toLocaleTimeString('en-US');
+                                  %>
+                                  
+                                  <li class="fc-flightInfo fc-departure-spaceport-name"><%= out[i].departureSpacePort.spaceportName %></li>
+                                  <li class="fc-flightInfo fc-departure-city-name"><%= out[i].departureSpacePort.cityName %><br><%= out[i].departureSpacePort.planetName %></li>
+                                  <li class=" fc-flightInfo fc-departure-time"><%= onlyTime %></li>
+                                  <li class="fc-flightInfo fc-departure-date"><%= formattedOutDate %></li>
+                              </ul>
+                            </div>
+                        
+                        <div class="flight-path-graphics">
+                          <div class="fc-flight-path"></div>
+                          <div class="rocket-icon"><i class="bi bi-rocket-takeoff-fill"></i></div>
+                          <div class="fc-flight-path"></div>
+                        </div>
+                        <div class="fc-arrivalInfoContainer">
+                          <ul>                                  
+                                  <% let fullArrivalDate = new Date(out[i].arrivalDateAndTime) %>
+                                  
+                                  <% 
+                                    const destinationFormatter = new Intl.DateTimeFormat('en-US', {
+                                      month: 'short',
+                                      day: 'numeric'
+                                    });
+                                    const formattedInDate = destinationFormatter.format(fullArrivalDate);
+                                    let onlyInTime = fullArrivalDate.toLocaleTimeString('en-US');
+                                  %>
+                                  <li class="fc-flightInfo fc-departure-spaceport-name"><%= out[i].destinationSpaceport.spaceportName %></li>
+                                  <li class="fc-flightInfo fc-departure-city-name"><%= out[i].destinationSpaceport.cityName %><br><%= out[i].destinationSpaceport.planetName %></li>
+                                  <li class=" fc-flightInfo fc-departure-time"><%= onlyInTime %></li>
+                                  <li class="fc-flightInfo fc-departure-date"><%= formattedInDate %></li>
+                              </ul>
+                        </div>
+                        </div>
                         <div class="flightCard-priceInfoAndBookingBtn">
-                            <div class="fc-class"><%= userQuery.travelClass %></div>
-                            <div class="fc-class">$78 000</div>
-                            <button class="own-std-btn primary-gradient">Book</button>
+                            <div class="fc-class"><%= userQuery.travelClass %> class</div>
+                            <% let ticketPrice = 0; %>
+                            <% out[i].seats.forEach(seat => {
+                                if (seat.class === userQuery.travelClass) {
+                                ticketPrice = seat.price; 
+                                }
+                            }); %>
+                            <div class="fc-price">$<%= ticketPrice %></div>
+                            <button class="own-std-btn fc-book-btn tertiary-gradient">Book</button>
 
                         </div>
                     </div>
                 </div>
             </div>
+              <% } %> 
         </div>
     </section>
+
+    <section class="footer primary-gradient">
+    <div class="container"> 
+      <div class="row">
+        <div class="col">
+            <p class="weight-600">About Airspace</p>
+            <ul>
+              <li><a>About Us</a></li>
+              <li><a>Careers</a></li>
+              <li><a>Investor relations</a></li>
+            </ul>
+            
+        </div>
+        <div class="col">
+          <p class="weight-600">Customer Service</p>
+          <ul>
+            <li><a>Help center</a></li>
+          </ul>
+
+        </div>
+        <div class="col">
+          <p class="weight-600">Policies</p>
+          <ul>
+            <li><a>Customer Complaint</a></li>
+            <li><a>Legal</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
 </body>

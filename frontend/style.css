@@ -2,7 +2,27 @@
       --main-accent-color:#0F1A64;   
       --second-accent-color: #BE1515;
 
+}
 
+body {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+}
+
+a {
+      text-decoration: none;
+      color: inherit;
+}
+
+ul {
+      list-style-type: none;
+      padding-left: 0;
+}
+
+.weight-600 {
+      font-weight: 600;
 }
 .secondary-gradient {
       background-image: linear-gradient(to right, #1E1B3F , #1F1438, #0F3E6A);
@@ -17,7 +37,7 @@
 }
 
 .tertiary-gradient {
-      background-image: linear-gradient(to right, #2a135e , #5e1661,#3c1375, #0e6579  );
+      background-image: linear-gradient(to right, #2a135e , #5e1661,#3c1375, #136375  );
       background-size: 200% 100%;
 
 }
@@ -67,14 +87,16 @@
       left: 50%;
       transform: translate(-50%, -50%); 
       width: 80%;
+      
 }
+
+
 
 .booking-div, .offers-div {
       background-color: #F4F4F4;
-      height: 500px;
       border-radius: 20px;
       position: relative;
-      padding: 15% 10%;
+      padding: 20% 10% 10% 10%;
 }
 
 .decoration-div {
@@ -113,7 +135,7 @@
       border-radius: 10px;
       border-style: none;
       font-size: 15px;
-      padding: 10px;
+      padding: 10px 5px;
 }
 
 #searchFlightBtn {
@@ -147,6 +169,27 @@
       
 }
 
+@media (max-width: 700px) {
+      
+      .booking-section {
+            padding-left: 30px;
+            padding-right: 30px;
+      }
+      .fc-price {
+            font-size: 14px !important;
+      }
+
+      .flightCard {
+            font-size: 80%;
+      }
+
+      .own-std-btn {
+            font-size: 80%;
+      }
+
+
+}
+
 .booking-title h1, h2 {
       margin-bottom: 0;
 }
@@ -162,16 +205,14 @@
 
 .flightCard {
       background-color: #F4F4F4;
-      height: 200px;
       border-radius: 20px;
       position: relative;
       box-shadow: 1px 1px 12px 1px rgba(0,0,0,0.3);
       transition: transform 0.3s ease; 
-
+      margin-bottom: 25px;
 }
 
 .fligthCard-Wrapper {
-      padding: 7% 10%;
       height: 100%;
       width: 100%;
 }
@@ -186,17 +227,72 @@
 }
 
 .flightCard-top-grid {
+      margin-top: 0px;
+      padding: 50px 20px 20px 20px;
       display: grid;
       grid-template-columns: 5fr 1fr;
       gap: 30%;
 }
 .flightCard-flightInfo {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
 
 }
 
 .flightCard-priceInfoAndBookingBtn {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       text-align: center;
       padding-left: 0%;
+}
+
+.flightCard-priceInfoAndBookingBtn div {
+      margin: 5px 0;
+}
+
+.fc-departure-spaceport-name {
+      font-size: 16px;
+}
+
+.fc-departure-city-name {
+      font-size: 14px;
+}
+
+.fc-departure-time {
+      font-size: 21px;
+      font-weight: 600;
+}
+
+.fc-departure-date {
+      font-size: 18px;
+}
+
+.fc-book-btn {
+      margin-top: 15px;
+      width: 60%;
+      margin: 8px auto;
+}
+
+.fc-flight-path {
+      width: 100%;
+      background-color: #D9D9D9;
+      height:1.5px;
+      margin: 0 15px;
+      margin-top: auto;
+      margin-bottom: auto;
+}
+
+.flight-path-graphics {
+      margin: auto 0;
+      display: flex;
+      flex-direction: row;
+
+}
+
+.rocket-icon {
+      font-size: 30px;
 }
 
 @keyframes moving {
@@ -210,3 +306,36 @@
     animation: moving 3s ease;
     animation-iteration-count: infinite;
 }
+
+.grow {
+    transition: all 0.5s ease;
+}
+
+.grow:hover {
+    transform: scale(1.005);
+}
+
+.fc-price {
+      font-size: 20px;
+}
+
+.footer {
+      margin-top: 200px;
+      margin-left: auto;
+      margin-right: auto;
+      min-height: 200px;
+      color: white;
+      padding-top: 50px;
+}
+
+.footer col {
+      margin-left: auto;
+      margin-right: auto;
+}
+
+.fc-flightInfo {
+      text-align: center;
+}
+
+
+

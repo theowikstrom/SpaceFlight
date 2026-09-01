@@ -1,13 +1,12 @@
 const Flight = require('../models/Flight'); 
-
+const SpacePort = require('../models/SpacePort');
 
 exports.searchFlights = async (req, res) => {
     try {
-            const {
-                query: { origin, destination, outboundDate, returnDate, adultCount, childCount, travelClass }
-            } = req;
-            
-        
+        const {
+            query: { origin, destination, outboundDate, returnDate, adultCount, childCount, travelClass }
+        } = req;
+
         const startOfDepartureDay = new Date(outboundDate);
         startOfDepartureDay.setHours(0, 0, 0, 0);
 
@@ -18,123 +17,116 @@ exports.searchFlights = async (req, res) => {
         const adultNum = Number(adultCount || 0);
         const totalPassengers = childNum + adultNum;
 
-        // Formatting dates for display purposes
+        // Formatting dates for display
         const formatter = new Intl.DateTimeFormat('en-US', {
-        month: 'short',
-        day: 'numeric'
+            month: 'short',
+            day: 'numeric'
         });
 
         const formattedDates = {
-            formattedOutDate : formatter.format(new Date(outboundDate)),
-            formattedReturnDate : formatter.format(new Date(returnDate))
+            formattedOutDate: outboundDate ? formatter.format(new Date(outboundDate)) : '',
+            formattedReturnDate: returnDate ? formatter.format(new Date(returnDate)) : 'No return date'
         };
 
-        let outFlights = null;
+        const departureSpacePort = await SpacePort.findOne({ cityName: origin });
+        const destinationSpacePort = destination ? await SpacePort.findOne({ cityName: destination }) : null;
 
-            // Do not filter for destination if it is left empty by the user
-        if (!destination) {
-             outFlights = await Flight.find({
-            departureLocation: origin,
-            departureDateAndTime: {
-                $gte: startOfDepartureDay,
-                $lte: endOfDepartureDay
-            },
-            $expr:{
-                $gte: [
-                    { $size: {
-                        $filter: {
-                            input: "$seats",
-                            as: "seat",
-                            cond: { $eq: ["$$seat.isBooked", false] }
-                        }
-                    }},
-                    totalPassengers
-                ]
-            }
-
-        });
-            
+        if (!departureSpacePort || (destination && !destinationSpacePort)) {
+            return res.render('flights', {
+                out: [],
+                in: [],
+                formattedDatesObject: formattedDates,
+                userQuery: req.query
+            });
         }
-        else {
-        outFlights = await Flight.find({
-            departureLocation: origin,
-            destinationLocation: destination,
-            departureDateAndTime: {
-                $gte: startOfDepartureDay,
-                $lte: endOfDepartureDay
-            },
-            $expr:{
+
+        let outFlights = [];
+
+
+        const seatCondition = [
+            { $eq: ["$$seat.isBooked", false] }
+        ];
+        if (travelClass) {
+            seatCondition.push({ $eq: ["$$seat.class", travelClass] });
+        }
+
+        const seatsQuery = {
+            $expr: {
                 $gte: [
-                    { $size: {
-                        $filter: {
-                            input: "$seats",
-                            as: "seat",
-                            cond: {
-                                $and: [ 
-                                    { $eq: ["$$seat.isBooked", false] },
-                                    { $eq: ["$$seat.class", travelClass] }
-                                    ]    
-                                }
+                    {
+                        $size: {
+                            $filter: {
+                                input: "$seats",
+                                as: "seat",
+                                cond: { $and: seatCondition }
+                            }
                         }
-                    }},
+                    },
                     totalPassengers
                 ]
             }
+        };
 
-        });
-    }
-        if (returnDate) {
+        if (!destination) {
+            outFlights = await Flight.find({
+                departureSpacePort: departureSpacePort._id,
+                departureDateAndTime: {
+                    $gte: startOfDepartureDay,
+                    $lte: endOfDepartureDay
+                },
+                ...seatsQuery
+            }).populate('departureSpacePort destinationSpaceport');
+        } else {
+            outFlights = await Flight.find({
+                departureSpacePort: departureSpacePort._id,
+                destinationSpaceport: destinationSpacePort._id,
+                departureDateAndTime: {
+                    $gte: startOfDepartureDay,
+                    $lte: endOfDepartureDay
+                },
+                ...seatsQuery
+            }).populate('departureSpacePort destinationSpaceport');
+        }
 
-        const startOfReturnDay = new Date(returnDate);
-        startOfReturnDay.setHours(0, 0, 0, 0);
+        let inFlights = [];
 
-        const endOfReturnDay = new Date(returnDate);
-        endOfReturnDay.setHours(23, 59, 59, 999);
+        // Om returresa är vald
+        if (returnDate && destinationSpacePort) {
+            const startOfReturnDay = new Date(returnDate);
+            startOfReturnDay.setHours(0, 0, 0, 0);
 
-        const inFlights = await Flight.find({
-            departureLocation: destination,
-            destinationLocation: origin,
-            departureDateAndTime: {
-                $gte: startOfReturnDay,
-                $lte: endOfReturnDay,
-            },
-            $expr:{
-            $gte: [
-                { $size: {
-                    $filter: {
-                        input: "$seats",
-                        as: "seat",
-                        cond: { $eq: ["$$seat.isBooked", false] }
-                    }
-                }},
-                totalPassengers
-            ]
-            }
-        })
-            const flightsViewModel = {
+            const endOfReturnDay = new Date(returnDate);
+            endOfReturnDay.setHours(23, 59, 59, 999);
+
+            inFlights = await Flight.find({
+                departureSpacePort: destinationSpacePort._id, 
+                destinationSpaceport: departureSpacePort._id, 
+                departureDateAndTime: {
+                    $gte: startOfReturnDay,
+                    $lte: endOfReturnDay
+                },
+                ...seatsQuery
+            }).populate('departureSpacePort destinationSpaceport');
+        }
+
+        
+
+        const flightsViewModel = {
             out: outFlights,
             in: inFlights,
             formattedDatesObject: formattedDates,
             userQuery: req.query
-            };
+        };
 
-            return res.status(200).render('flights', flightsViewModel);
-        }
-        else {
-            const flightsViewModel = {
-                out: outFlights,
-                in: null,
-                formattedDatesObject: formattedDates,
-                userQuery: req.query
-            };
-
-            return res.status(200).render('flights', flightsViewModel);
-
-        }
+        return res.status(200).render('flights', flightsViewModel);
 
     } catch (error) {
+        console.error('Error searching flights:', error);
         res.status(500).send('Internal server error');
-        console.log(error);
     }
-}
+};
 
+exports.initBooking = (req, res) => {
+
+    return res.status(200).send('So, you wanna book, I see?');
+};
