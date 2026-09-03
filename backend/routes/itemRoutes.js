@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Item = require('../models/Item'); // Importera modellen
-
-// GET: Hämta alla items (Async/Await används istället för synkron kod)
+const Item = require('../models/Item'); 
 router.get('/', async (req, res) => {
     try {
         const items = await Item.find();
@@ -12,7 +10,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST: Skapa ett nytt item
 router.post('/', async (req, res) => {
     const newItem = new Item({
         name: req.body.name,

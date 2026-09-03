@@ -26,9 +26,25 @@ const flightSearchQueryValidation = [
     }
 ];
 
+
+const bookingValidation = [
+    query('flightNumber').isString().isNumeric().escape(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                errors: errors.array()
+            })
+        }
+        next();
+    }
+]
+
 router.get('/search', flightSearchQueryValidation, flightController.searchFlights);
 
-router.get('/book', flightController.initBooking);
+router.get('/book', bookingValidation, flightController.initBooking);
 
 
 

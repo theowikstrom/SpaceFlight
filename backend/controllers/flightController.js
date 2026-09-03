@@ -1,11 +1,14 @@
 const Flight = require('../models/Flight'); 
 const SpacePort = require('../models/SpacePort');
+const session = require('express-session');
 
 exports.searchFlights = async (req, res) => {
     try {
         const {
             query: { origin, destination, outboundDate, returnDate, adultCount, childCount, travelClass }
         } = req;
+
+        req.session.searchQuery = req.query;
 
         const startOfDepartureDay = new Date(outboundDate);
         startOfDepartureDay.setHours(0, 0, 0, 0);
@@ -90,7 +93,6 @@ exports.searchFlights = async (req, res) => {
 
         let inFlights = [];
 
-        // Om returresa är vald
         if (returnDate && destinationSpacePort) {
             const startOfReturnDay = new Date(returnDate);
             startOfReturnDay.setHours(0, 0, 0, 0);
@@ -126,7 +128,59 @@ exports.searchFlights = async (req, res) => {
     }
 };
 
-exports.initBooking = (req, res) => {
+exports.initBooking = async (req, res) => {
+    const {
+        query: { flightNumber, isBookingReturnFlight, actionIsForReturnFlight } } = req
 
-    return res.status(200).send('So, you wanna book, I see?');
+        if (flightNumber) {
+
+            const flight = await Flight.findOne({ flightNumber: flightNumber})
+            
+            if (flight) {
+                if (!actionIsForReturnFlight) {
+                    req.session.outFlight = flight;
+                    req.session.isOutFlightChosen = true;
+
+                    if (isBookingReturnFlight) {
+                        return res.status(200).render('flights') // Det är här jag insåg att jag ville kalla på den andra metoden
+                    }
+                    else {
+                        return res.status(200).render('bookingSeatsStep', {
+                            outFlight: req.session.outFlight,
+                            inFlight: false
+                        });
+                    }
+                }
+                else {
+                    req.session.inFlight = flight;
+                    req.session.isInFlightChosen = true;
+                    return res.status(200).render('bookingSeatsStep', {
+                            outFlight: req.session.outFlight,
+                            inFlight: flight
+                        });
+
+                    
+                }
+            }
+            else {
+                return res.status(404).send('404 - Flight not found. We apologize for this error.');
+            }
+        }
+        else {
+            return res.status(400).send('400 - Request information was incomplete. We apologize for this error.');
+        }
+
+        
+        if (isBookingReturnFlight) {
+
+        }
+
+        // Case: the user is booking a one way ticket and wants to proceed booking it.  
+        else if (!isBookingReturnFlight) {
+
+        }
+        
+
+
+
 };
