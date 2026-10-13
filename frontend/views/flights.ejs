@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spaceflight - search results</title>
+    <title>Spaceflight - Search results</title>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="../style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"></head>
 <body>
+    <% const flights = actionIsForReturnFlight ? flightsViewModel.in : flightsViewModel.out; %>
     <nav class="navbar navbar-dark navbar-expand-lg bg-body-tertiary fixed-top own-top-nav primary-gradient">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
@@ -42,13 +43,16 @@
   </nav>
     <section class="booking-section">
         <div class="booking-title"> 
-            <h1 class="own-page-header">Departing</h1>
-            <h2 class="own-page-subheader"> <%= formattedDatesObject?.formattedOutDate %></h2>
+            <h1 class="own-page-header"><%= actionIsForReturnFlight ? 'Returning' : 'Departing' %></h1>
+            <h2 class="own-page-subheader"><%= actionIsForReturnFlight ? flightsViewModel.formattedDatesObject.formattedReturnDate : flightsViewModel.formattedDatesObject.formattedOutDate %></h2>
             <div class="title-accent-line red-accent-gradient"></div>
         </div>
 
         <div class="flightsListContainer">
-          <% for (let i = 0; i < out.length; i++) { %>
+          <% if (flights.length === 0) { %>
+            <p class="text-center">No flights are available for this search.</p>
+          <% } %>
+          <% for (let i = 0; i < flights.length; i++) { %>
             <div class="flightCard grow">
                 <div class="fligthCard-Wrapper">
                     <div class="flightCard-top-bar tertiary-gradient moving-gradient"></div>
@@ -56,7 +60,7 @@
                         <div class="flightCard-flightInfo">
                             <div class="fc-departureInfoContainer">
                               <ul>
-                                  <% let fullDate = new Date(out[i].departureDateAndTime) %>
+                                  <% let fullDate = new Date(flights[i].departureDateAndTime) %>
                                   
                                   <% 
                                     const formatter = new Intl.DateTimeFormat('en-US', {
@@ -67,8 +71,8 @@
                                     let onlyTime = fullDate.toLocaleTimeString('en-US');
                                   %>
                                   
-                                  <li class="fc-flightInfo fc-departure-spaceport-name"><%= out[i].departureSpacePort.spaceportName %></li>
-                                  <li class="fc-flightInfo fc-departure-city-name"><%= out[i].departureSpacePort.cityName %><br><%= out[i].departureSpacePort.planetName %></li>
+                                  <li class="fc-flightInfo fc-departure-spaceport-name"><%= flights[i].departureSpacePort.spaceportName %></li>
+                                  <li class="fc-flightInfo fc-departure-city-name"><%= flights[i].departureSpacePort.cityName %><br><%= flights[i].departureSpacePort.planetName %></li>
                                   <li class=" fc-flightInfo fc-departure-time"><%= onlyTime %></li>
                                   <li class="fc-flightInfo fc-departure-date"><%= formattedOutDate %></li>
                               </ul>
@@ -81,7 +85,7 @@
                         </div>
                         <div class="fc-arrivalInfoContainer">
                           <ul>                                  
-                                  <% let fullArrivalDate = new Date(out[i].arrivalDateAndTime) %>
+                                  <% let fullArrivalDate = new Date(flights[i].arrivalDateAndTime) %>
                                   
                                   <% 
                                     const destinationFormatter = new Intl.DateTimeFormat('en-US', {
@@ -91,23 +95,19 @@
                                     const formattedInDate = destinationFormatter.format(fullArrivalDate);
                                     let onlyInTime = fullArrivalDate.toLocaleTimeString('en-US');
                                   %>
-                                  <li class="fc-flightInfo fc-departure-spaceport-name"><%= out[i].destinationSpaceport.spaceportName %></li>
-                                  <li class="fc-flightInfo fc-departure-city-name"><%= out[i].destinationSpaceport.cityName %><br><%= out[i].destinationSpaceport.planetName %></li>
+                                  <li class="fc-flightInfo fc-departure-spaceport-name"><%= flights[i].destinationSpaceport.spaceportName %></li>
+                                  <li class="fc-flightInfo fc-departure-city-name"><%= flights[i].destinationSpaceport.cityName %><br><%= flights[i].destinationSpaceport.planetName %></li>
                                   <li class=" fc-flightInfo fc-departure-time"><%= onlyInTime %></li>
                                   <li class="fc-flightInfo fc-departure-date"><%= formattedInDate %></li>
                               </ul>
                         </div>
                         </div>
                         <div class="flightCard-priceInfoAndBookingBtn">
-                            <div class="fc-class"><%= userQuery.travelClass %> class</div>
-                            <% let ticketPrice = 0; %>
-                            <% out[i].seats.forEach(seat => {
-                                if (seat.class === userQuery.travelClass) {
-                                ticketPrice = seat.price; 
-                                }
-                            }); %>
+                            <div class="fc-class"><%= flightsViewModel.userQuery.travelClass %> class</div>
+                            <% const ticketSeat = flights[i].seats.find(seat => seat.class === flightsViewModel.userQuery.travelClass && !seat.isBooked); %>
+                            <% const ticketPrice = ticketSeat ? ticketSeat.price : '—'; %>
                             <div class="fc-price">$<%= ticketPrice %></div>
-                            <a href="/flights/book?flightNumber=<%= out[i].flightNumber %>" class="own-std-btn fc-book-btn tertiary-gradient">Book</a>
+                            <a href="/flights/book?flightNumber=<%= flights[i].flightNumber %>" class="own-std-btn fc-book-btn tertiary-gradient">Book</a>
 
                         </div>
                     </div>

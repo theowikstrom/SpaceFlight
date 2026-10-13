@@ -153,6 +153,26 @@ ul {
 
 }
 
+.own-page-h2 {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+      font-size: 24px;
+      color: var(--main-accent-color)   
+}
+
+.own-page-h3 {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-style: normal;
+      font-size: 18px;
+      color: var(--main-accent-color)   
+}
+
+
+
 .own-page-subheader {
       font-family: "Inter", sans-serif;
       font-optical-sizing: auto;
@@ -337,5 +357,48 @@ ul {
       text-align: center;
 }
 
+.seat-map {
+      background-color: rgb(233, 232, 232);
+      border-radius: 20px;    
+      min-height: 500px;
+      /* min-width: 300px; */
+      max-width: 450px;
+      margin: 75px auto;
+      display: grid;
+      grid-template-columns: repeat(7, auto);
+      padding: 20px;
+      align-content: start;
 
+}
 
+.seatmap-seat {
+      height: 50px;
+      width: 50px;
+      background-color:#aeaeae;
+      border-radius: 10px;
+      margin: 5px;
+      
+}
+
+.seatmap-filler {
+      background-color: rgb(233, 232, 232) !important;
+}
+
+.hidden {
+      display: none;
+}
+
+#out-or-in-header {
+      margin-bottom: 10px;
+      margin-top: -5px;
+}
+
+.passenger-indicator {
+      display: flex;
+      flex-direction: row;
+}
+
+.passenger-indicator-person {
+      font-size: 24px; 
+      color: gray;      
+}

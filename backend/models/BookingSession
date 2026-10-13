@@ -1,0 +1,14 @@
+const mongoose = require('mongoose');
+
+const bookingSessionSchema = new mongoose.Schema({
+    outBoundFlight: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Flight',
+            required: [true, 'Outbound flight is required']
+    },
+    returnFlight: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Flight',
+        required: false
+    }
+});

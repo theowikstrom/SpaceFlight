@@ -57,8 +57,8 @@
       <form action="/flights/search" method="GET" class="was-validated">
         <div class="form-container">
                   <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="returnToggle" checked>
-             <label class="form-check-label" for="checkDefault">
+            <input class="form-check-input" type="checkbox" id="returnToggle" checked>
+             <label class="form-check-label" for="returnToggle">
               Round Trip
               </label>
               </div>      
@@ -73,7 +73,7 @@
               </div>
               <div class="col-6">
                 <label for="liftoffInput" class="form-label">Lift off date</label>
-                <input type="date" name="outboundDate" class="form-control" id="liftoffInput">
+                <input type="date" name="outboundDate" class="form-control" id="liftoffInput" required>
               </div>
                 <div class="col-6" id="returnDateContainer">
                   <label for="returnInput" class="form-label">Return Date</label>

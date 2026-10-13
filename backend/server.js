@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const itemRoutes = require('./routes/itemRoutes');
 const flightRouter = require('./routes/flightRoutes');
-const { query, validationResult } = require('express-validator');
 const session = require('express-session');
 const { env } = require('process');
 
@@ -50,8 +49,6 @@ app.use(session({
 // Homepage
 
 app.get('/', (req, res) => {
-    console.log(req.session);
-    console.log(req.sessionID);
     res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
